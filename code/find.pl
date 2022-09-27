@@ -1,10 +1,12 @@
-use strict;
+use strict 'vars';
+use strict 'subs';
 use List::Util qw(min);
 #use List::UtilsBy; 
 binmode STDOUT , ":utf8";
 my $depa_bwt="../depa.bwt.sorted";
 my $depa="../depa";
 my $muni="../muni.csv";
+my $depa_muni_bwt='../depa_Muni.csv.bwt.sorted';
 my %depa; 	# $depa{"depa name"}=sum of the letters equals between the 
 			# query and the match.
 			# It is used when there is not an exact coincidence between query and substring
@@ -16,7 +18,8 @@ my %depa; 	# $depa{"depa name"}=sum of the letters equals between the
 			#IOQUIA^IANTIOQUIA$
 			#IOQUI
 			#IPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CA^IARCHIPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CA$			
-my %muni
+my %muni;
+
 my $depa_Muni="../depa_Muni.csv";
 my %depa_Muni;
 my $bestDepaTruncated="NULL";
@@ -27,6 +30,11 @@ my $maxLeven=$ARGV[1];
 my @circularDic0;
 my @circularDic1;
 my %cache;
+
+
+
+
+
 
 sub leven {
     my ($s, $t) = @_;
@@ -102,8 +110,8 @@ sub find_binary {
 										        find_binary($array_ref, $value, $middle + 1, $right);
 											    }
 										    }
-###################################################################
-sub return_Match{
+####################################################################
+sub return_match{
 	my $query=$_[0];
 	my $longestLength=0;
 	my $longestMatch="Null";
@@ -147,7 +155,7 @@ sub return_Match{
 		}
 	
 #Check output using levenDistance
-if (leven($query,$longestOriginalWord)<$maxLeven+1)
+if ((leven($query,$longestOriginalWord)/length($query))<0.2) #It is the % of the match
 	{
 	return $longestOriginalWord;
 	}
@@ -159,6 +167,7 @@ else
 		}
 	else 
 		{
+		print "Line 170 query= $query longest Word= $longestOriginalWord    bestDepaTruncated = $bestDepaTruncated\n";
 		return "-1";	
 		}
 	}
@@ -182,31 +191,139 @@ sub normalize_csv {
 		$depa_Muni{$key}=0;	
 		}
 	}
-sub column_muni{
-	#it opens the file
-	}
+
 	
 sub returnSeparator {
 	my $fileName=$_[0];
-	my @freq_char;# this is an array of hashes, doc at https://www.educba.com/perl-array-of-hashes/
+	my %freq_char_by_line;	# this is an array of hashes, doc at 
+					#https://www.educba.com/perl-array-of-hashes/
+				
+	my %charArray;		#It hosts the list of chars.
+	 
 	open(file,"<".$fileName) or print "$fileName.does not exist";
-	while(my $line=<file>)
+	binmode file, ":utf8";
+	my $lineN=0; # It has to read all the file
+				 # Some field (e.g. departamento) could be repeated several times
+	while(my $line=<file> )
 		{
-		$line=~s/\n/\r/g
+		$line=~s/\n|\r//g;
 		for (my $c=0;$c<length($line);$c++)
 				{
-				if (exists $freq_char[$lineN]{substr($line,$c,1)})
+				if (exists $freq_char_by_line{substr($line,$c,1)}{$lineN})
 						{
-						$freq_char[$lineN]{substr($line,$c,1)}++;
+						$freq_char_by_line{substr($line,$c,1)}{$lineN}++;
+
+						#print "Line 25 I increased freq_char_by_line{".substr($line,$c,1)."}{".$lineN."} to ".$freq_char_by_line{substr($line,$c,1)}{$lineN}."\n" ;
 						}
 				else
 						{
-						$freq_char{substr($line,$c,1)}=1;
+						$freq_char_by_line{substr($line,$c,1)}{$lineN}=1;
+						#print "Line 30 \t"." I initailized the ash at ".substr($line,$c,1)." and ".$lineN."\n"; 
+						$charArray{substr($line,$c,1)}=1;
 						}
 				}
+		$lineN++;
+		}
+	#Iterates around all chars
+	foreach my $char (keys %freq_char_by_line)
+		{
+		my $first="true";
+		my $lastFreq; # It sets to 0 the freq at each chars 
+		foreach my $lineNHash (keys %{$freq_char_by_line{$char}})
+			{
+			if (($first ne "true") and ($freq_char_by_line{$char}{$lineNHash} ne $lastFreq) and (exists $charArray{$char}))
+				{#It deletes all the keys using $char
+				delete $charArray{$char};
+				#print "At line ".$lineNHash." there are ".$freq_char_by_line{$char}{$lineNHash}." and in the previous line there are ".$lastFreq."\n";
+				}
+			if ($first eq  "true")
+				{
+				$first="false";
+				$lastFreq= $freq_char_by_line{$char}{$lineNHash};
+				}
+			
+			}		
+		}
+	my @separator=keys %charArray;
+	if ((scalar @separator) > 1)
+		{
+		my $maxFreq70=0; #It hosts the separator with maximum frequency 
+		my $sepMaxfreq="NULL";
+		print "Line 49 There is more than one separator's candidates, corresponidng to columns \n";
+		for (my $c=0; $c<scalar(@separator);$c++)
+			{
+			if ( $freq_char_by_line{$separator[$c]}{"10"}> $maxFreq70)
+				{
+				#print "The new best separator is ".$separator[$c]." with a frequence ".$freq_char_by_line{$separator[$c]}{"10"}."\n";
+				my $sepNoPointer=$separator[$c];
+				$maxFreq70=$freq_char_by_line{$sepNoPointer}{"10"};
+				$sepMaxfreq=$separator[$c];
+				#print "Line 70 best sep =$sepMaxfreq\n";
+				} 	
+			}
+		print "LINE 69 I ESTIMATED THE SEPARATOR OF THE FILE ".$file2Correct." AS ".$sepMaxfreq."\n";
+		return $sepMaxfreq;
+		}
+	else
+		{
+		return $separator[0];
 		}
 	}
 
+sub column_muni{
+my $file=$_[0];
+my $sep5=$_[1];
+#$maxLeven is a global variable
+my @howManyMatches;
+my $fieldN=0; # It stores the number of fields in a file
+	#It initalizes the array to 0;
+	for (my $e=0;$e<100;$e++)
+		{
+		$howManyMatches[$e]=0;
+		}
+
+open(file,"<$file") or print "$file does not exist\n";
+binmode file, ":utf8";
+for (my $c=0;$c<100;$c++)
+	{
+	my $line=<file>;
+	$line =~ s/\n|\r//g;
+	my @line=split(/$sep5/,$line);
+	$fieldN=scalar(@line);
+	for (my $d=0;$d<scalar(@line);$d++)
+			{
+			
+			if (return_match($line[$d],\@circularDic0) ne "-1" )
+				{
+				$howManyMatches[$d]++;
+				print "Line_294 d=$d ".$line[$d]." could be a department\n";
+				}
+			else
+				{
+				print "Line_302 ".$line[$d]." could not be a department\n"; 	
+				}
+			}
+	}
+	my $maxFreq=0;
+	my $colNumber="Null";
+	for (my $f=0;$f<$fieldN;$f++)
+		{
+		if ($maxFreq<$howManyMatches[$f])
+			{
+			#print "The new best is col $f";
+			$maxFreq = $howManyMatches[$f];
+			$colNumber=$f;
+			}
+		}
+if ($maxFreq <80)
+	{return "ERRORcolumn_muni, maxFreq=".$maxFreq."\n"}
+	else 
+	{
+	return $colNumber;
+	}
+}
+
+print "usage: perl find.pl filename\n The file should be UTF8\nYou should check it with file filename and convert it with \n iconv -f ISO-8859-1 -t utf8 filename -o filename.utf8";
 open(depa_bwt,"<$depa_bwt") or print $depa_bwt." does not exist\n";
 binmode depa_bwt, ":utf8";
 my $lCounter=0;
@@ -236,19 +353,21 @@ while (my $line=<muni>)
 	}
 close muni;
 
-
 while (my $line=<muni>)
 	{
 	$line=~s/\n|\r//g;
 	$muni{$line}=0;	
 	}
-open(depa_muni,"<".$depa_Muni) or print $depa_muni." does not exist\n"; #this file is ";" separated
+open(depa_muni,"<".$depa_muni_bwt) or print $depa_muni_bwt." does not exist\n"; #this file is ";" separated
 while (my $line=<depa_muni>)
 	{
 	$line				=~s/\n|\r//g;
 	$depa_Muni{$line}	=			1;
 	}
+close depa_muni;
+print "The municipality column is".column_muni($file2Correct,returnSeparator($file2Correct))."\n";
 
+#Which one is the field separator?
 #open(file,"<$file2Correct") or print "$file2Correct does not exist\n";
 #Which column is Depa(if there is one) and which column is Muni(if there is one)
 
@@ -262,7 +381,7 @@ __END__
 	City(Municipio),id
 	or, when we do not have the department Municipio, ID, or when we do not have the City Department(ID)
 	For debugging porpuses it is a series of nested functions that 
-	are  executed as normalize_csv(column_depa,column_muni,return_Match(find_binary(leven())))
+	are  executed as normalize_csv(column_depa,column_muni,return_match(find_binary(leven())))
 
 =head2 normalize_csv(fileName)
 
@@ -271,7 +390,7 @@ __END__
 	Output: the csv file name + corrected geographical location
 	THIS IS TO FINISH!!!!
 
-=head2 return_Match(query,\array)
+=head2 return_match(query,\array)
 
 	Given a string(query) and an array it returns the nearest word  
 
