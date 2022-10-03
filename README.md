@@ -16,7 +16,5 @@ file_name/tword1/tword2/t.....
 The code appears to have a memory leak problem.
 It is using 30% of the computer memory without writing nothing in the file
 
-The result shouls be at "/home/erubagotti/data/databaseNormalization/indexFile" otherwise I should run a https://metacpan.org/pod/Memory::Process or other memory profiling app
-
-
-
+The result shouls are  at "/home/erubagotti/data/databaseNormalization/indexFile".
+aim of this code is to understand in which files do I have geographical information 
