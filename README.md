@@ -26,3 +26,4 @@ I moved several code in oldCode.
 
 I am passing through isDate/isADate.pl to identify strings with a patterns
  
+It works and I should merge it with the file parser.pl
