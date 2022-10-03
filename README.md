@@ -18,11 +18,11 @@ file_name/tword1/tword2/t.....
 The code appears to have a memory leak problem.
 It is using 30% of the computer memory without writing nothing in the file
 
-The result shouls are  at "/home/erubagotti/data/databaseNormalization/indexLibroDeCampo/indexLibroDeCampo".
+The result are  at "/home/erubagotti/data/databaseNormalization/indexLibroDeCampo/indexLibroDeCampo".
 
 This version of the code does not deal properly with time and dates.
 I moved several code in oldCode.
 
 
-I am passing through isADate.pl to identify strings with a patterns
+I am passing through isDate/isADate.pl to identify strings with a patterns
  
