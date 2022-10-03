@@ -22,3 +22,7 @@ The result shouls are  at "/home/erubagotti/data/databaseNormalization/indexLibr
 
 This version of the code does not deal properly with time and dates.
 I moved several code in oldCode.
+
+
+I am passing through isADate.pl to identify strings with a patterns
+ 
