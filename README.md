@@ -9,6 +9,8 @@ I read all the files in the cuaderno de campo.
 The code is at index.pl
 
 At the moment I am running the code erubagotti@COMOSPLNXU09:~/aspell/code$ rm nohup.out; nohup perl index.pl &
+there is a module in the file parser.pl to run different processes and avoid memory leaks.
+
 The index should be at /home/erubagotti/data/databaseNormalization/indexFile
 The format will be 
 file_name/tword1/tword2/t.....
@@ -16,5 +18,7 @@ file_name/tword1/tword2/t.....
 The code appears to have a memory leak problem.
 It is using 30% of the computer memory without writing nothing in the file
 
-The result shouls are  at "/home/erubagotti/data/databaseNormalization/indexFile".
-aim of this code is to understand in which files do I have geographical information 
+The result shouls are  at "/home/erubagotti/data/databaseNormalization/indexLibroDeCampo/indexLibroDeCampo".
+
+This version of the code does not deal properly with time and dates.
+I moved several code in oldCode.
