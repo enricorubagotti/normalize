@@ -35,7 +35,7 @@ Each column will be represented as a vector of % of N-Grams with N going from 1 
 
 The code flow is described below
 Data structure:
-The index of all files is  eported  at /home/erubagotti/data/databaseNormalization/indexLibroDeCampo/indexLibroDeCampo and the file structure is as follows.
+The index of all files is  eported  at /home/erubagotti/data/databaseNormalization/indexLibroDeCampo/indexLibroDeCampo and the file structure is as follows."New_File\n\n" identifies a new file. 
 FileName\tsheetName
 Sheet_Name\tColumn_Number\tValue
 Sheet_Name\tColumn_Number\tValue
@@ -43,6 +43,7 @@ Sheet_Name\tColumn_Number\tValue
 Sheet_Name\tColumn_Number\tValue
 Sheet_Name\tColumn_Number\tValue
 ........
+New_File #This value is between a file and another.
 
 FileName\tsheetName
 Sheet_Name\tColumn_Number\tValue
