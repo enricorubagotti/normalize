@@ -29,3 +29,25 @@ I am passing through isDate/isADate.pl to identify strings with a patterns
 It works and I should merge it with the file parser.pl
 Identify date is difficult, there are several formats, and is not necessary.
 I woyuld like to identify the column where the geographical information are stored.
+
+I could not locate any municipio in the data up to know. For this reason I will use a hierarchical clusetring algorithm in R between all the columns
+Each column will be represented as a vector of % of N-Grams with N going from 1 to 5. To calculate the N-gam I will use a vector of sorted prefixes and suffixes.
+
+The code flow is described below
+Data structure:
+The index of all files is  eported  at /home/erubagotti/data/databaseNormalization/indexLibroDeCampo/indexLibroDeCampo and the file structure is as follows.
+FileName\tsheetName
+Sheet_Name\tColumn_Number\tValue
+Sheet_Name\tColumn_Number\tValue
+Sheet_Name\tColumn_Number\tValue
+Sheet_Name\tColumn_Number\tValue
+Sheet_Name\tColumn_Number\tValue
+........
+
+FileName\tsheetName
+Sheet_Name\tColumn_Number\tValue
+Sheet_Name\tColumn_Number\tValue
+Sheet_Name\tColumn_Number\tValue
+Sheet_Name\tColumn_Number\tValue
+Sheet_Name\tColumn_Number\tValue
+
