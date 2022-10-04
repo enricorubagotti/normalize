@@ -27,3 +27,5 @@ I moved several code in oldCode.
 I am passing through isDate/isADate.pl to identify strings with a patterns
  
 It works and I should merge it with the file parser.pl
+Identify date is difficult, there are several formats, and is not necessary.
+I woyuld like to identify the column where the geographical information are stored.
