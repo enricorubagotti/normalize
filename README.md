@@ -54,3 +54,4 @@ Sheet_Name\tColumn_Number\tValue
 
 The code is at /home/erubagotti/aspell/code/N_grams.pl
 
+The code is using 94% of RAM.... It should be rewritten...
