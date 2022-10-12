@@ -60,5 +60,23 @@ I am reading the file once without keeping in mmeory any variables
 
 It worked......
 The results are at /home/erubagotti/aspell/code/N_grams/arrayR.txtnor.txt
-Now I will load it in R
+Now I will load it in R.
+R crashed !!!!!
+This code appears to be too long to develop.
+So I am downgrading it to a spell checker to normalize geographical name in csv file
+The code 1.spellcheck.pl correctly correct words in a file from a dictionary.
 
+I will modularize it and export all the XLS files into CSVs
+and submit it as an article.
+
+I will employ it to spell check words from an xls file
+
+The code to check the department is 
+spell.check.depa.pl
+The one to check the municipality is 
+spell.check.depa.pl
+spell.check.muni.pl
+I shouls amend it to keep counting the number of failures to match and stops  when matches are less than 50% 
+Input: a column
+Output: a list of -1 if the column is not composed by geographical names 
+or the spell checked geographical names otherwise
