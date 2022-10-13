@@ -92,3 +92,11 @@ The code is running at
 /home/erubagotti/aspell/code/nohup perl  spell_depa.pl &
 I should analyze the outputs.
 
+The levenstein distance is too high.
+
+I should use an average  levenstein distance on a column to decide if it is 
+a geographical column or not. 
+
+The code work!!!!!
+
+
