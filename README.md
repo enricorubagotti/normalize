@@ -83,3 +83,4 @@ or the spell checked geographical names otherwise
 I merged the two dictionaries (department and municipality) into one 
 /home/erubagotti/aspell/code/depaYmuni.bwt.sorted
 
+I am working on spell_depa.pl
