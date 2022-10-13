@@ -87,3 +87,8 @@ I am working on spell_depa.pl
 It is able to get the departments from the
 xls file but the file /home/erubagotti/aspell/code/depaYmuni.bwt.sorted is likeley incomplete,
 it does not find the correct words.
+
+The code is running at 
+/home/erubagotti/aspell/code/nohup perl  spell_depa.pl &
+I should analyze the outputs.
+
