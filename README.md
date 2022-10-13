@@ -80,3 +80,6 @@ I shouls amend it to keep counting the number of failures to match and stops  wh
 Input: a column
 Output: a list of -1 if the column is not composed by geographical names 
 or the spell checked geographical names otherwise
+I merged the two dictionaries (department and municipality) into one 
+/home/erubagotti/aspell/code/depaYmuni.bwt.sorted
+
