@@ -84,3 +84,6 @@ I merged the two dictionaries (department and municipality) into one
 /home/erubagotti/aspell/code/depaYmuni.bwt.sorted
 
 I am working on spell_depa.pl
+It is able to get the departments from the
+xls file but the file /home/erubagotti/aspell/code/depaYmuni.bwt.sorted is likeley incomplete,
+it does not find the correct words.
