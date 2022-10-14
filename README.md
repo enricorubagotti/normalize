@@ -97,7 +97,7 @@ The levenstein distance is too high.
 I should use an average  levenstein distance on a column to decide if it is 
 a geographical column or not. 
 
-The code work!!!!!
+The code work for departamentos but there are memory   leaks !!!!!
 This code should 
 1) Classify a column as municipio, departamento, o otro
 2) Spell check the column
