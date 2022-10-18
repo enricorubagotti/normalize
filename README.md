@@ -103,3 +103,6 @@ This code should
 2) Spell check the column
 
 
+The code appears working!!!!
+I should decide what to do now....
+How to label the records  to load it in the database?
