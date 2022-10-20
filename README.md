@@ -98,11 +98,30 @@ I should use an average  levenstein distance on a column to decide if it is
 a geographical column or not. 
 
 The code work for departamentos but there are memory   leaks !!!!!
-This code should 
+The code appears working!!!!
+
+
+Now it appear to work!!!!!
+
+This new  code (column_classifier.pl) should 
 1) Classify a column as municipio, departamento, o otro
 2) Spell check the column
+3) Ask to the user the best selection between the first 10
+4) Store this datawww
+To achieve so I should:
+1) Load  two different  dictionaris for municipality, y departamentos
+2) For each column, select the best dictionary (if bith pass the test)
+
+The next step will be to cluster the columns using a metric
+Each subwords will be recorded as 
+subwords\tFile1;Column1\tFile2; Column 2
+
+d (File I;Column j to File N, Column N)= 1/number of lines where both two columns appears
+sort the columns by distance and plots the distance;
+Decide watching the graph the threeshold to employ.
 
 
-The code appears working!!!!
+
+
 I should decide what to do now....
 How to label the records  to load it in the database?
